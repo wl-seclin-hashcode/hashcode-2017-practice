@@ -27,6 +27,11 @@ class SolverSpec extends FlatSpec with Matchers with PropertyChecks {
     score shouldBe 15
   }
 
+  "Problem" should "split correctly" in {
+    Problem(Vector("TT", "MM"), 2, 2, 1, 2).splitInSmallerProblems.size shouldBe 1
+    problem.splitInSmallerProblems.size shouldBe 2
+  }
+
   //  it should "return >0 for team with a stronger leek (damage)" in {
   //    forAll(genTeam, Gen.chooseNum(1, 1000)) { (team1: Seq[Leek], i: Int) =>
   //      whenever(team1.nonEmpty) {

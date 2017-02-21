@@ -14,9 +14,9 @@ object Validator {
           val cells = slice.cells
           checkSlice(slice, problem) match {
             case None =>
-              if (cells.exists(used.contains)) OngoingValidation(0, Vector(), Some(slice + " uses cells which are already in use"))
+              if (cells.exists(used.contains)) OngoingValidation(0, Set(), Some(slice + " uses cells which are already in use"))
               else OngoingValidation(score + cells.size, used ++ cells)
-            case err => OngoingValidation(0, Vector(), err)
+            case err => OngoingValidation(0, Set(), err)
           }
         }
     }
@@ -41,5 +41,5 @@ object Validator {
   }
 }
 
-case class OngoingValidation(score: Int = 0, usedCells: Vector[Point] = Vector(), failure: Option[String] = None)
+case class OngoingValidation(score: Int = 0, usedCells: Set[Point] = Set(), failure: Option[String] = None)
 

@@ -14,6 +14,8 @@ case class Slice(row1: Int, row2: Int, col1: Int, col2: Int) {
     that.cells.exists(cells.contains)
   }
 
+  def shift(r: Int, c: Int) = Slice(row1 + r, row2 + r, col1 + c, col2 + c)
+
   override def toString = s"$row1 $col1 ${row2 - 1} ${col2 - 1}"
 }
 

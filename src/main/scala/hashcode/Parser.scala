@@ -10,8 +10,8 @@ object Parser {
     val nrow = nextInt()
     val ncol = nextInt()
     val minIngredients = nextInt()
-    val maxCellsInSlice= nextInt()
-    
+    val maxCellsInSlice = nextInt()
+
     nextLine()
     val pizza = Vector.fill(nrow) { nextLine() }
 

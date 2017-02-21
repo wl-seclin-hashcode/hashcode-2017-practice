@@ -5,16 +5,28 @@ import scala.annotation.tailrec
 
 object Solver extends Logging {
   def solve(problem: Problem): Solution = {
+    val subProblems = problem.splitInSmallerProblems
+    if (subProblems.size == 1) solveSmall(problem)
+    else {
+      val smallSols = for {
+        p <- subProblems
+        slice <- solveSmall(p).slices
+      } yield slice.shift(p.rowShit, p.colShift)
+      Solution(smallSols.toSeq)
+    }
+  }
+
+  def solveSmall(problem: Problem): Solution = {
     import problem._
     val all = validSlices(problem).toVector.sortBy(-_.size)
-    debug(s"${all.size} possible slices")
+    debug(s"${all.size} possible slices for $problem")
     @tailrec
     def filterRec(candidates: Vector[Slice], selected: Vector[Slice]): Vector[Slice] =
       if (candidates.isEmpty) selected
       else {
         val s = candidates.head
         val rest = candidates.tail.filterNot(_.intersects(s))
-        debug(rest.size + " slices to consider")
+        //        debug(rest.size + " slices to consider")
         filterRec(rest, selected :+ s)
       }
     Solution(filterRec(all, Vector()))
