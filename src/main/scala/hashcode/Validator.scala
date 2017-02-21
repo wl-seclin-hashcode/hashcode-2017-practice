@@ -1,0 +1,40 @@
+package hashcode
+
+import scala.annotation.tailrec
+import scala.util.Try
+import scala.util.Failure
+
+object Validator {
+  def score(solution: Solution, problem: Problem): Either[Int, String] = {
+
+    val validation = solution.slices.foldLeft(OngoingValidation()) {
+      case (ongoing @ OngoingValidation(score, used, failure), slice) =>
+        if (failure.isDefined) ongoing
+        else {
+          val cells = slice.cells
+          checkSlice(slice, problem) match {
+            case None =>
+              if (cells.exists(used.contains)) OngoingValidation(0, Vector(), Some(slice + " uses cells which are already in use"))
+              else OngoingValidation(score + cells.size, used ++ cells)
+            case err => OngoingValidation(0, Vector(), err)
+          }
+        }
+    }
+    validation.failure match {
+      case Some(err) => Right(err)
+      case None      => Left(validation.score)
+    }
+  }
+
+  def checkSlice(slice: Slice, problem: Problem): Option[String] = {
+    val cells = slice.cells
+    val mushroom = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'M' }
+    val tomato = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'T' }
+    if (mushroom < problem.minIngredients || tomato < problem.minIngredients) Some(slice + " does not use enough ingredients")
+    else if (cells.size > problem.maxCells) Some(slice + " is too big")
+    else None
+  }
+}
+
+case class OngoingValidation(score: Int = 0, usedCells: Vector[Point] = Vector(), failure: Option[String] = None)
+
