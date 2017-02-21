@@ -28,11 +28,16 @@ object Validator {
 
   def checkSlice(slice: Slice, problem: Problem): Option[String] = {
     val cells = slice.cells
-    val mushroom = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'M' }
-    val tomato = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'T' }
-    if (mushroom < problem.minIngredients || tomato < problem.minIngredients) Some(slice + " does not use enough ingredients")
-    else if (cells.size > problem.maxCells) Some(slice + " is too big")
-    else None
+    cells.collect { case p @ Point(r, c) if r >= problem.nrow || c >= problem.ncol => p }.headOption match {
+      case Some(Point(r, c)) => Some(s"invalid slice : $r,$c is out of bounds")
+      case _ =>
+        val mushroom = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'M' }
+        val tomato = cells.count { case Point(r, c) => problem.ingredientAt(r, c) == 'T' }
+        if (mushroom < problem.minIngredients || tomato < problem.minIngredients) Some(slice + " does not use enough ingredients")
+        else if (cells.size > problem.maxCells) Some(slice + " is too big")
+        else None
+    }
+
   }
 }
 

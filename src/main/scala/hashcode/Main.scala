@@ -6,7 +6,10 @@ import grizzled.slf4j.Logging
 
 object Main extends App with Logging {
   val names = Seq(
-    "small.in")
+    "small.in",
+    "example.in",
+    "medium.in",
+    "big.in")
   info(names.map(solveIt).sum + s" total score for $names ")
 
   def solveIt(n: String) = {

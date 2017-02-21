@@ -14,9 +14,17 @@ class SolverSpec extends FlatSpec with Matchers with PropertyChecks {
 
   "Solver" should "solve trivial problem" in {
     val sol = Solver.solve(problem)
-    
+
     val Left(score) = Validator.score(sol, problem)
     score shouldBe 8
+  }
+
+  it should "solve the example" in {
+    val example = Parser.read("example.in")
+    val sol = Solver.solve(example)
+
+    val Left(score) = Validator.score(sol, example)
+    score shouldBe 15
   }
 
   //  it should "return >0 for team with a stronger leek (damage)" in {
