@@ -15,6 +15,6 @@ object Parser {
     nextLine()
     val pizza = Vector.fill(nrow) { nextLine() }
 
-    Problem(pizza, nrow, ncol, minIngredients, maxCellsInSlice)
+    Problem(pizza, nrow, ncol, minIngredients, maxCellsInSlice, name = f)
   }
 }
