@@ -22,10 +22,11 @@ object Solver extends Logging {
     }
     info("initial solution : score = " + initial.usedCells.size)
     initial.writeToFile(problem.name)
-    val filled = fill(initial, problem.validSlices)
+    val slices = problem.validSlices
+    info(s"problem has ${slices.size} possible slices")
+    val filled = fill(initial, slices)
     info("filled solution : score = " + filled.usedCells.size)
-    //    improve(filled, problem, 0, 100)
-    filled
+    improve(filled, problem, 0, 100)
   }
 
   def improve(s: Solution, p: Problem, i: Int, tries: Int): Solution = {
@@ -34,8 +35,8 @@ object Solver extends Logging {
       else improve(s, p, 0, tries - 1)
     else {
       val (before, after) = s.slices.splitAt(i)
-      val someSlices = before ++ after.drop(1)
-      val another = fill(Solution(someSlices), p.validSlices.toList)
+      val someSlices = before ++ after.drop(3)
+      val another = fill(Solution(someSlices), p.validSlices)
       val newScore = another.usedCells.size
       val oldScore = s.usedCells.size
       if (newScore > oldScore) {

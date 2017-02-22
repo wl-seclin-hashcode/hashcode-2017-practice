@@ -37,7 +37,6 @@ object Validator {
         else if (cells.size > problem.maxCells) Some(slice + " is too big")
         else None
     }
-
   }
 }
 

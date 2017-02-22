@@ -13,14 +13,14 @@ case class Problem(pizza: Vector[String], nrow: Int, ncol: Int, minIngredients: 
 
   lazy val _validSlices: Vector[Slice] = {
     for {
-      startRow <- 0 until nrow
+      startRow <- (0 until nrow).par
       startCol <- 0 until ncol
       slice <- slicesStartingAt(startRow, startCol)
       if Validator.checkSlice(slice, this).isEmpty
     } yield slice
   }.toVector.sortBy(-_.size)
 
-  lazy val validSlices: List[Slice] = _validSlices.toList // .sortBy(sliceIntersections)
+  lazy val validSlices: List[Slice] = _validSlices.toList.sortBy(sliceIntersections)
 
   lazy val sliceIntersections: Map[Slice, Int] =
     _validSlices.map { s1 =>
