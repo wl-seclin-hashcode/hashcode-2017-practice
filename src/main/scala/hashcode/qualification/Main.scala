@@ -14,18 +14,18 @@ object Main extends App with Logging {
     info(s"starting problem $n")
     val problem = Parser.read(n)
     println(problem)
-    0
-//    val solution = Solver.solve(problem)
-//
-//    Validator.score(solution, problem) match {
-//      case Left(score) =>
-//        info(s"score for $n : $score")
-//        Formatter.write(solution, score, n)
-//        score
-//      case Right(err) =>
-//        error(s"validation error for $n : $err")
-//        0
-//    }
+
+    val solution = Solver.solve(problem)
+
+    Validator.score(solution, problem) match {
+      case Left(score) =>
+        info(s"score for $n : $score")
+        Formatter.write(solution, score, n)
+        score
+      case Right(err) =>
+        error(s"validation error for $n : $err")
+        0
+    }
   }
 
 }

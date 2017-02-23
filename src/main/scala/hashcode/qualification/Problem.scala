@@ -5,8 +5,7 @@ case class Problem(videos: Int,
                    cacheCapacity: Int,
                    videoSizes: Vector[Int],
                    endpoints: Vector[Endpoint],
-                   requests: Vector[Request]
-                  ) {
+                   requests: Vector[Request]) {
 
 }
 

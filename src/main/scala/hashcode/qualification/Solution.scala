@@ -1,13 +1,13 @@
 package hashcode.qualification
 
 import java.io.PrintStream
-import java.nio.file.{Files, Paths}
+import java.nio.file.{ Files, Paths }
 
 import grizzled.slf4j.Logging
 import rapture.json._
 import rapture.json.jsonBackends.jawn._
 
-case class Solution() {
+case class Solution(serverAffectations: Vector[ServerAffectation]) {
 
   def writeToFile(name: String): Unit = {
     val ps = new PrintStream(name + ".json")
@@ -16,6 +16,8 @@ case class Solution() {
   }
 
 }
+
+case class ServerAffectation(cacheServer: Int, videos: Vector[Int])
 
 object Solution extends Logging {
 
@@ -30,5 +32,3 @@ object Solution extends Logging {
   }
 
 }
-
-case class Point(r: Int, c: Int)
