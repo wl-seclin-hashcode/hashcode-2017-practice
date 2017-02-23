@@ -19,32 +19,27 @@ object Parser {
 
     val videoSizes = scan.nextLine().split(" ").map(_.toInt).toVector
 
-
-    def readEndpoint():Endpoint={
+    def readEndpoint(): Endpoint = {
       val l = scan.nextInt()
       val k = scan.nextInt()
       scan.nextLine()
-      val latencies=(for {
+      val latencies = (for {
         i <- 0 until k
         line = scan.nextLine()
-        Array(cacheId, lat)=line.split(" ").map(_.toInt)
+        Array(cacheId, lat) = line.split(" ").map(_.toInt)
       } yield cacheId -> lat).toMap
-      Endpoint(l,latencies)
+      Endpoint(l, latencies)
     }
 
     val endpoints = Vector.fill(e)(readEndpoint())
 
-    val requests = Vector.fill(r){
-      val Array(v,e,n)=scan.nextLine().split(" ").map(_.toInt)
-      Request(v,e,n)
+    val requests = Vector.fill(r) {
+      val Array(v, e, n) = scan.nextLine().split(" ").map(_.toInt)
+      Request(v, e, n)
     }
 
-    Problem(v,c,x, videoSizes,endpoints, requests)
-
-
+    Problem(c, x, videoSizes, endpoints, requests)
 
   }
-
-
 
 }

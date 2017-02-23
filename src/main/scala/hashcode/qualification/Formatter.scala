@@ -13,8 +13,8 @@ object Formatter extends Logging {
     for {
       a <- solution.serverAffectations
     } {
-      print(a.cacheServer + " ")
-      println(a.videos.mkString(" "))
+      f.print(a.cacheServer + " ")
+      f.println(a.videos.mkString(" "))
     }
     f.close()
     info(s"wrote to $file")
