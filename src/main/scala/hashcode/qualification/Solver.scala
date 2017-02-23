@@ -17,7 +17,8 @@ object Solver extends Logging {
     val affectations = for {
       cacheId <- 0 until caches
       requests = requestsPerCacheServer(cacheId)
-      videos = requests.map(r => problem.videos(r.videoId)) //.sortBy(v => -videosCount(v.id))
+      ids = requests.map(_.videoId).distinct // TODO : keep count
+      videos = ids.map(problem.videos) //.sortBy(v => -videosCount(v.id))
     } yield ServerAffectation(cacheId, videosSelect(videos.toList, cacheCapacity))
     Solution(affectations.toVector)
   }
