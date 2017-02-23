@@ -11,6 +11,12 @@ case class Problem(
 
   val requestsPerEndpoint: Map[Int, Vector[Request]] = requests.groupBy(_.endpointId).withDefaultValue(Vector())
 
+  val requestsPerVideo: Map[Int, Vector[Request]] = requests.groupBy(_.videoId).withDefaultValue(Vector())
+
+  val videosCount: Map[Int, Int] = requestsPerVideo.mapValues(reqs => reqs.map(_.count).sum).withDefaultValue(0)
+
+  val videosSortedByCount = videos.sortBy(v => -videosCount(v.id))
+
   val requestPerEndpointPerVideo: Map[Int, Map[Int, Request]] = requestsPerEndpoint.mapValues {
     reqs =>
       val byVideo = reqs.groupBy(_.videoId)

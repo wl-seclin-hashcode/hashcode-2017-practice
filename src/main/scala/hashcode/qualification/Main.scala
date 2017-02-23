@@ -13,6 +13,7 @@ object Main extends App with Logging {
   def solveIt(n: String): Int = {
     info(s"starting problem $n")
     val problem = Parser.read(n)
+    info(s"parsed problem $n")
     val solution = Solver.solve(problem)
 
     Validator.score(solution, problem) match {

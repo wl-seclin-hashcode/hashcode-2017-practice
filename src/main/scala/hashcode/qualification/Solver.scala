@@ -7,21 +7,22 @@ object Solver extends Logging {
   def solve(problem: Problem): Solution = {
     import problem._
 
-    def isUsed(video: Video, cacheId: Int): Boolean = {
-      val endpointsForCache = problem.endpoints.filter(_.cacheServers.contains(cacheId))
-      endpointsForCache.exists(ep => problem.requestPerEndpointPerVideo(ep.id).contains(video.id))
+    def isUsed(video: Video, endpointsForCache: Vector[Endpoint]): Boolean = {
+      //endpointsForCache.exists(ep => requestPerEndpointPerVideo(ep.id).contains(video.id))
+      true
     }
 
-    def videosSelect(cacheId: Int, videos: List[Video], remainingSize: Int, selected: Vector[Int] = Vector()): Vector[Int] = videos match {
+    def videosSelect(endpointsForCache: Vector[Endpoint], videos: List[Video], remainingSize: Int, selected: Vector[Int] = Vector()): Vector[Int] = videos match {
       case Nil => selected
       case h :: t =>
-        if (h.size <= remainingSize && isUsed(h, cacheId)) videosSelect(cacheId, t, remainingSize - h.size, h.id +: selected)
-        else videosSelect(cacheId, t, remainingSize, selected)
+        if (h.size <= remainingSize && isUsed(h, endpointsForCache)) videosSelect(endpointsForCache, t, remainingSize - h.size, h.id +: selected)
+        else videosSelect(endpointsForCache, t, remainingSize, selected)
     }
 
     val affectations = for {
-      cacheId <- 0 until problem.caches
-    } yield ServerAffectation(cacheId, videosSelect(cacheId, videos.sortBy(_.size).toList, cacheCapacity))
+      cacheId <- 0 until caches
+      endpointsForCache = endpoints.filter(_.cacheServers.contains(cacheId))
+    } yield ServerAffectation(cacheId, videosSelect(endpointsForCache, videosSortedByCount.toList, cacheCapacity))
     Solution(affectations.toVector)
   }
 
