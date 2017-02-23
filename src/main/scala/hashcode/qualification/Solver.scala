@@ -1,6 +1,7 @@
 package hashcode.qualification
 
 import grizzled.slf4j.Logging
+import scala.util.Random
 
 object Solver extends Logging {
 
@@ -19,7 +20,7 @@ object Solver extends Logging {
     } yield {
       val requests = requestsPerCacheServer(cacheId)
       val ids = requests.map(_.videoId).distinct // TODO : keep count
-      val videos = ids.map(problem.videos).sortBy(v => -videosCount(v.id))
+      val videos = Random.shuffle(ids.map(problem.videos))
       val selected = videosSelect(videos.toList, cacheCapacity)
       debug(s"for server $cacheId, using ${selected.size} videos out of ${ids.size}")
       ServerAffectation(cacheId, selected)
