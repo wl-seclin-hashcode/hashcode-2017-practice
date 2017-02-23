@@ -17,7 +17,9 @@ case class Solution(serverAffectations: Vector[ServerAffectation]) {
 
 }
 
-case class CachedVideo(video: Int, cacheServer: Int, videoSize: Int, score: Int)
+case class CachedVideo(video: Video, cacheServer: Int, score: Int = 0) {
+  val cost = video.size
+}
 
 case class ServerAffectation(cacheServer: Int, videos: Vector[Int])
 
