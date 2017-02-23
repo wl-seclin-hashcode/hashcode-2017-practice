@@ -1,11 +1,20 @@
 package hashcode.qualification
 
+import grizzled.slf4j.Logging
+
 case class Problem(
     caches: Int,
     cacheCapacity: Int,
     videoSizes: Vector[Int],
     endpoints: Vector[Endpoint],
-    requests: Vector[Request]) {
+    reqs: Vector[Request]) extends Logging {
+
+  val requests = {
+    val uniques = reqs.groupBy(r => (r.endpointId, r.videoId)).map {
+      case ((ep, vi), vect) => Request(ep, vi, vect.map(_.count).sum)
+    }
+    uniques.toVector
+  }
 
   val videos = videoSizes.zipWithIndex.map { case (s, id) => Video(id, s) }
 
