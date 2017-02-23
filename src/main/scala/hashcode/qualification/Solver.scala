@@ -16,10 +16,14 @@ object Solver extends Logging {
 
     val affectations = for {
       cacheId <- 0 until caches
-      requests = requestsPerCacheServer(cacheId)
-      ids = requests.map(_.videoId).distinct // TODO : keep count
-      videos = ids.map(problem.videos) //.sortBy(v => -videosCount(v.id))
-    } yield ServerAffectation(cacheId, videosSelect(videos.toList, cacheCapacity))
+    } yield {
+      val requests = requestsPerCacheServer(cacheId)
+      val ids = requests.map(_.videoId).distinct // TODO : keep count
+      val videos = ids.map(problem.videos).sortBy(v => -videosCount(v.id))
+      val selected = videosSelect(videos.toList, cacheCapacity)
+      debug(s"for server $cacheId, using ${selected.size} videos out of ${ids.size}")
+      ServerAffectation(cacheId, selected)
+    }
     Solution(affectations.toVector)
   }
 

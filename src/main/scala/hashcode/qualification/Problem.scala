@@ -11,7 +11,7 @@ case class Problem(
 
   val requests = {
     val uniques = reqs.groupBy(r => (r.endpointId, r.videoId)).map {
-      case ((ep, vi), vect) => Request(ep, vi, vect.map(_.count).sum)
+      case ((ep, vi), vect) => Request(vi, ep, vect.map(_.count).sum)
     }
     uniques.toVector
   }
