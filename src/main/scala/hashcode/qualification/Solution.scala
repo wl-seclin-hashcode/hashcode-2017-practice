@@ -17,6 +17,8 @@ case class Solution(serverAffectations: Vector[ServerAffectation]) {
 
 }
 
+case class CachedVideo(video: Int, cacheServer: Int, videoSize: Int, score: Int)
+
 case class ServerAffectation(cacheServer: Int, videos: Vector[Int])
 
 object Solution extends Logging {

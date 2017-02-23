@@ -7,7 +7,7 @@ case class Problem(
     endpoints: Vector[Endpoint],
     requests: Vector[Request]) {
 
-  val videos = videoSizes.zipWithIndex.map { case (id, s) => Video(id, s) }
+  val videos = videoSizes.zipWithIndex.map { case (s, id) => Video(id, s) }
 
 }
 
