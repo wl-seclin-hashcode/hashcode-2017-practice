@@ -6,14 +6,14 @@ object Main extends App with Logging {
   val names = Seq(
     "qualification/me_at_the_zoo.in",
     "qualification/trending_today.in",
-    "qualification/kittens.in",
-    "qualification/videos_worth_spreading.in")
+    "qualification/videos_worth_spreading.in",
+    "qualification/kittens.in")
   info(names.map(solveIt).sum + s" total score for $names ")
 
   def solveIt(n: String): Int = {
     info(s"starting problem $n")
     val problem = Parser.read(n)
-    info(s"parsed problem $n")
+    info(s"parsed problem $n : ${problem.caches} cache servers ${problem.endpoints.size} endpoints ${problem.requests.size} requests")
     val solution = Solver.solve(problem)
 
     Validator.score(solution, problem) match {

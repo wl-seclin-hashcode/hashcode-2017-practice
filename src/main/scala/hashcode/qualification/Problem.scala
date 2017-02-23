@@ -11,6 +11,39 @@ case class Problem(
 
   val requestsPerEndpoint: Map[Int, Vector[Request]] = requests.groupBy(_.endpointId).withDefaultValue(Vector())
 
+  val endpointsPerCacheServer: Map[Int, Vector[Endpoint]] = {
+    val all = for {
+      e <- endpoints.toVector
+      c <- e.cacheServers
+    } yield (e, c)
+
+    val byCache = all.groupBy(_._2)
+
+    byCache.mapValues(_.map(_._1))
+  }
+
+  val cacheServersPerEndpoint: Map[Int, Vector[Int]] = {
+    val all = for {
+      e <- endpoints.toVector
+      c <- e.cacheServers
+    } yield (c, e.id)
+
+    val byEp = all.groupBy(_._2)
+
+    byEp.mapValues(_.map(_._1))
+  }.withDefaultValue(Vector())
+
+  val requestsPerCacheServer: Map[Int, Vector[Request]] = {
+    val all = for {
+      r <- requests
+      c <- cacheServersPerEndpoint(r.endpointId)
+    } yield (r, c)
+
+    val byCache = all.groupBy(_._2)
+
+    byCache.mapValues(_.map(_._1))
+  }
+
   val requestsPerVideo: Map[Int, Vector[Request]] = requests.groupBy(_.videoId).withDefaultValue(Vector())
 
   val videosCount: Map[Int, Int] = requestsPerVideo.mapValues(reqs => reqs.map(_.count).sum).withDefaultValue(0)
