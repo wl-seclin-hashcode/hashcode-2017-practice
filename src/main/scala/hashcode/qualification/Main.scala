@@ -4,9 +4,9 @@ import grizzled.slf4j.Logging
 
 object Main extends App with Logging {
   val names = Seq(
+    "qualification/kittens.in",
     "qualification/me_at_the_zoo.in",
     "qualification/trending_today.in",
-    "qualification/kittens.in",
     "qualification/videos_worth_spreading.in")
   info(names.map(solveIt).sum + s" total score for $names ")
 
