@@ -1,8 +1,8 @@
-package hashcode
+package hashcode.training
 
 import grizzled.slf4j.Logging
+
 import scala.annotation.tailrec
-import scala.util.Random
 
 object Solver extends Logging {
   def solve(problem: Problem): Solution = {
@@ -55,7 +55,6 @@ object Solver extends Logging {
   }
 
   def solveSmall(problem: Problem): Solution = {
-    import problem._
     val all = problem.validSlices
 
     @tailrec

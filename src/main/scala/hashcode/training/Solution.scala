@@ -1,14 +1,11 @@
-package hashcode
+package hashcode.training
 
-import rapture._
-import core._, json._
-import jsonBackends.jawn._
-import formatters.humanReadable._
 import java.io.PrintStream
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
+import java.nio.file.{Files, Paths}
+
 import grizzled.slf4j.Logging
+import rapture.json._
+import rapture.json.jsonBackends.jawn._
 
 case class Solution(slices: Seq[Slice]) { self =>
   lazy val usedCells = slices.flatMap(_.cells).toSet

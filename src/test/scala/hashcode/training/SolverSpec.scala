@@ -1,12 +1,9 @@
-package hashcode
+package hashcode.training
 
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.prop.PropertyChecks
-import org.scalacheck.Shrink._
-import scala.Vector
 
 @RunWith(classOf[JUnitRunner])
 class SolverSpec extends FlatSpec with Matchers with PropertyChecks {
@@ -20,7 +17,7 @@ class SolverSpec extends FlatSpec with Matchers with PropertyChecks {
   }
 
   it should "solve the example" in {
-    val example = Parser.read("example.in")
+    val example = Parser.read("training/example.in")
     val sol = Solver.solve(example)
 
     val Left(score) = Validator.score(sol, example)

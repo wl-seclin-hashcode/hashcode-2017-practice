@@ -1,4 +1,4 @@
-package hashcode
+package hashcode.training
 
 case class Problem(pizza: Vector[String], nrow: Int, ncol: Int, minIngredients: Int, maxCells: Int, rowShit: Int = 0, colShift: Int = 0, name: String = "problem") {
   def ingredientAt(r: Int, c: Int): Char = pizza(r)(c)

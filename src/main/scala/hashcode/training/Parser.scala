@@ -1,4 +1,4 @@
-package hashcode
+package hashcode.training
 
 import java.io.File
 import java.util.Scanner

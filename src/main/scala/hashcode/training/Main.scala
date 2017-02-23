@@ -1,15 +1,13 @@
-package hashcode
-
-import java.awt.{ Color, Dimension, Graphics }
+package hashcode.training
 
 import grizzled.slf4j.Logging
 
 object Main extends App with Logging {
   val names = Seq(
-    "small.in",
-    "example.in",
-    "medium.in",
-    "big.in")
+    "training/small.in",
+    "training/example.in",
+    "training/medium.in",
+    "training/big.in")
   info(names.map(solveIt).sum + s" total score for $names ")
 
   def solveIt(n: String) = {

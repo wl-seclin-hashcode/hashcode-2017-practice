@@ -1,8 +1,4 @@
-package hashcode
-
-import scala.annotation.tailrec
-import scala.util.Try
-import scala.util.Failure
+package hashcode.training
 
 object Validator {
   def score(solution: Solution, problem: Problem): Either[Int, String] = {

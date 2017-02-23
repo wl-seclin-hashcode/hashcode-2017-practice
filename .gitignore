@@ -25,4 +25,6 @@ project/plugins/project/
 .cache-*
 *.orig
 
+.idea
+
 out.*
