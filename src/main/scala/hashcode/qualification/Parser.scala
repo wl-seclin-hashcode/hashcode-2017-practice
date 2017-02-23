@@ -19,7 +19,7 @@ object Parser {
 
     val videoSizes = scan.nextLine().split(" ").map(_.toInt).toVector
 
-    def readEndpoint(): Endpoint = {
+    def readEndpoint(id: Int): Endpoint = {
       val l = scan.nextInt()
       val k = scan.nextInt()
       scan.nextLine()
@@ -28,10 +28,10 @@ object Parser {
         line = scan.nextLine()
         Array(cacheId, lat) = line.split(" ").map(_.toInt)
       } yield cacheId -> lat).toMap
-      Endpoint(l, latencies)
+      Endpoint(id, l, latencies)
     }
 
-    val endpoints = Vector.fill(e)(readEndpoint())
+    val endpoints = Vector.tabulate(e)(readEndpoint)
 
     val requests = Vector.fill(r) {
       val Array(v, e, n) = scan.nextLine().split(" ").map(_.toInt)
