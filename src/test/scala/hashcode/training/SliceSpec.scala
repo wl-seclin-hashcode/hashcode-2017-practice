@@ -17,17 +17,6 @@ class SliceSpec extends FlatSpec with Matchers with PropertyChecks {
     }
   }
 
-  //  it should "return >0 for team with a stronger leek (damage)" in {
-  //    forAll(genTeam, Gen.chooseNum(1, 1000)) { (team1: Seq[Leek], i: Int) =>
-  //      whenever(team1.nonEmpty) {
-  //        val l = team1.head
-  //        val betterLeek = l.copy(damage = l.damage + i)
-  //        val betterTeam = team1.tail :+ betterLeek
-  //        evaluation.compare(betterTeam, team1) should be > 0.0
-  //      }
-  //    }
-  //  }
-
   def genSlice: Gen[Slice] = {
     for {
       a <- Gen.chooseNum(1, 200)
@@ -37,12 +26,6 @@ class SliceSpec extends FlatSpec with Matchers with PropertyChecks {
     } yield Slice(a, b, c, d)
   }
 
-  //  def genLeek: Gen[Leek] =
-  //    for {
-  //      life <- Gen.chooseNum(1, 1000)
-  //      damage <- Gen.chooseNum(1, 1000)
-  //    } yield Leek(life, damage)
-  //
   implicit val arbitrarySlice = Arbitrary(genSlice)
 
   implicit val shrinkSlice: Shrink[Slice] = Shrink {
