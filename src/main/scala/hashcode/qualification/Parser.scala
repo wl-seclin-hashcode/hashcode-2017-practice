@@ -5,6 +5,7 @@ import java.util.Scanner
 
 object Parser {
 
+
   def read(f: String): Problem = {
 
     val scan = new Scanner(new File(f))

@@ -9,6 +9,13 @@ case class Problem(
     endpoints: Vector[Endpoint],
     reqs: Vector[Request]) extends Logging {
 
+  def latency(endpointId: Int, videoId:Int, solution: Solution):Int = {
+    val endpoint = endpoints.find(_.id==endpointId).get
+    val cacheServers=solution.serverAffectations.filter(sa ⇒ sa.videos.contains(videoId)).map(_.cacheServer)
+    val latencies = endpoint.latency :: cacheServers.map(cache ⇒ endpoint.serverLatencies(cache)).toList
+    latencies.min
+  }
+
   val requests = {
     val uniques = reqs.groupBy(r => (r.endpointId, r.videoId)).map {
       case ((ep, vi), vect) => Request(vi, ep, vect.map(_.count).sum)
