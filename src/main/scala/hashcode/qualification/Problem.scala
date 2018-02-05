@@ -82,7 +82,7 @@ case class Video(id: Int, size: Int)
 
 case class Endpoint(id: Int, latency: Int, serverLatencies: Map[Int, Int]) {
   val latencySavedPerCacheServer: Map[Int, Int] =
-    serverLatencies.mapValues(l => latency - l)
+    serverLatencies.mapValues(l => latency - l).withDefaultValue(0)
 
   val cacheServers = latencySavedPerCacheServer.keySet
 }

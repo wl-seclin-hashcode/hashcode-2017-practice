@@ -7,8 +7,7 @@ object Solver extends Logging {
   def gain(problem: Problem, cacheId: Int, videoId: Int) = {
     def gainForEndpoint(endpointId: Int) = problem.endpoints(endpointId).latencySavedPerCacheServer(cacheId)
     def gainForRequest(request: Request) = request.count * gainForEndpoint(request.endpointId)
-    val requests = problem.requestsPerVideo(videoId).map(gainForRequest).sum
-
+    problem.requestsPerVideo(videoId).map(gainForRequest).sum
   }
 
 
