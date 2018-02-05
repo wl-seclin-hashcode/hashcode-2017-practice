@@ -20,11 +20,9 @@ class SolverSpec extends FlatSpec with Matchers {
     Solver.gain(problem, 0, 1) shouldBe 900000
   }
 
-  "Solver" should "find gain" in {
+  "Solver" should "optimize one cache - SC0" in {
     val problem = Parser.read("qualification/example.in")
-    Solver.gain(problem, 0, 0) shouldBe 0
-    Solver.gain(problem, 0, 1) shouldBe 900000
+    Solver.solveCache(problem, 0) shouldBe Set(1,3)
   }
-
 
 }

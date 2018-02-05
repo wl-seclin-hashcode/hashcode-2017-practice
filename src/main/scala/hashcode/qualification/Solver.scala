@@ -4,10 +4,19 @@ import grizzled.slf4j.Logging
 import scala.util.Random
 
 object Solver extends Logging {
-  def gain(problem: Problem, cacheId: Int, videoId: Int) = {
+  def gain(problem: Problem, cacheId: Int, videoId: Int): Int = {
     def gainForEndpoint(endpointId: Int) = problem.endpoints(endpointId).latencySavedPerCacheServer(cacheId)
+
     def gainForRequest(request: Request) = request.count * gainForEndpoint(request.endpointId)
+
     problem.requestsPerVideo(videoId).map(gainForRequest).sum
+  }
+
+  def solveCache(problem: Problem, cacheId: Int): Set[Int] = {
+    val nbVideos = problem.videoSizes.size
+    val allVideoIds = 0 until nbVideos
+    val (_, bestVideoIds) = Knapsack.solve[Int](allVideoIds, gain(problem, cacheId, _), problem.videoSizes, problem.cacheCapacity)
+    bestVideoIds
   }
 
 
@@ -33,7 +42,6 @@ object Solver extends Logging {
     }
     Solution(affectations.toVector)
   }
-
 
 
 }
