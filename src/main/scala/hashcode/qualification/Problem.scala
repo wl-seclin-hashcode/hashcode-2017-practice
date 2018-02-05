@@ -3,16 +3,23 @@ package hashcode.qualification
 import grizzled.slf4j.Logging
 
 case class Problem(
-    caches: Int,
-    cacheCapacity: Int,
-    videoSizes: Vector[Int],
-    endpoints: Vector[Endpoint],
-    reqs: Vector[Request]) extends Logging {
+                    caches: Int,
+                    cacheCapacity: Int,
+                    videoSizes: Vector[Int],
+                    endpoints: Vector[Endpoint],
+                    reqs: Vector[Request]) extends Logging {
 
-  def latency(endpointId: Int, videoId:Int, solution: Solution):Int = {
-    val endpoint = endpoints.find(_.id==endpointId).get
-    val cacheServers=solution.serverAffectations.filter(sa ⇒ sa.videos.contains(videoId)).map(_.cacheServer)
-    val latencies = endpoint.latency :: cacheServers.map(cache ⇒ endpoint.serverLatencies(cache)).toList
+  def gainForRequest(solution: Solution, requestId: Int): Int = {
+    val request = reqs(requestId)
+    val endpoint = endpoints(request.endpointId)
+    request.count * (endpoint.latency - latency(request.endpointId, request.videoId, solution))
+  }
+
+
+  def latency(endpointId: Int, videoId: Int, solution: Solution): Int = {
+    val endpoint = endpoints.find(_.id == endpointId).get
+    val cacheServers = solution.serverAffectations.filter(sa ⇒ sa.videos.contains(videoId)).map(_.cacheServer)
+    val latencies = endpoint.latency +: cacheServers.flatMap(cache ⇒ endpoint.serverLatencies.get(cache))
     latencies.min
   }
 

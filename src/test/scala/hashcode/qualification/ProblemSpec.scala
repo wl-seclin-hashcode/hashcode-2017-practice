@@ -30,4 +30,12 @@ class ProblemSpec extends FlatSpec with Matchers {
     problem.latency(solution = sol, endpointId = 0, videoId = 3) shouldBe 300
     problem.latency(solution = sol, endpointId = 0, videoId = 4) shouldBe 1000
   }
+
+  "Problem" should "compute gain for request in trivial problem/solution" in {
+    problem.gainForRequest(solution = sol, requestId = 1) shouldBe 0
+    problem.gainForRequest(solution = sol, requestId = 2) shouldBe 0
+    problem.gainForRequest(solution = sol, requestId = 0) shouldBe 700 * 1500
+    problem.gainForRequest(solution = sol, requestId = 3) shouldBe 800 * 1000
+  }
+
 }
