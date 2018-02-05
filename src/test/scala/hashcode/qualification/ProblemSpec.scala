@@ -14,14 +14,15 @@ class ProblemSpec extends FlatSpec with Matchers {
     ServerAffectation(2, Vector(0, 1))
   ))
 
-  //  "Validator" should "score trivial problem/solution" in {
-  //    val sol = Solution(Vector(
-  //      ServerAffectation(0, Vector(2)),
-  //      ServerAffectation(1, Vector(3, 1)),
-  //      ServerAffectation(2, Vector(0, 1))
-  //    ))
-  //    Validator.score(sol, problem) shouldBe Left(462500)
-  //  }
+    "Validator" should "score trivial problem/solution" in {
+      val sol = Solution(Vector(
+        ServerAffectation(0, Vector(2)),
+        ServerAffectation(1, Vector(3, 1)),
+        ServerAffectation(2, Vector(0, 1))
+      ))
+      Validator.score(sol, problem) shouldBe Left(462500)
+      // TODO : check that wrong solutions return Right
+    }
 
   "Problem" should "compute latency in trivial problem/solution" in {
     problem.latency(solution = sol, endpointId = 0, videoId = 0) shouldBe 200
