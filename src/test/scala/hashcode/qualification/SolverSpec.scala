@@ -6,11 +6,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class SolverSpec extends FlatSpec with Matchers {
-  val sol = Solution(Vector(
-    ServerAffectation(0, Vector(2)),
-    ServerAffectation(1, Vector(3, 1)),
-    ServerAffectation(2, Vector(0, 1))
-  ))
 
   "Solver" should "solve trivial problem" in {
     //    val sol = Solver.solve(problem)
