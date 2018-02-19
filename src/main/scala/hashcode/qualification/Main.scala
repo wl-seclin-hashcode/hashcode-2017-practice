@@ -14,7 +14,7 @@ object Main extends App with Logging {
     info(s"starting problem $n")
     val problem = Parser.read(n)
     info(s"parsed problem $n : ${problem.caches} cache servers ${problem.endpoints.size} endpoints ${problem.requests.size} requests")
-    val solution = Solver.solve(problem)
+    val solution = problem.solveWithKnapsack
 
     Validator.score(solution, problem) match {
       case Left(score) =>

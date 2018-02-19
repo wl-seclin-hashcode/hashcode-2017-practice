@@ -2,6 +2,8 @@ package hashcode.qualification
 
 import grizzled.slf4j.Logging
 
+import scala.util.Random
+
 case class Problem(
                     caches: Int,
                     cacheCapacity: Int,
@@ -83,6 +85,53 @@ case class Problem(
       }
 
   }
+
+
+  def gain(cacheId: Int, videoId: Int): Int = {
+    def gainForEndpoint(endpointId: Int) = endpoints(endpointId).latencySavedPerCacheServer(cacheId)
+
+    def gainForRequest(request: Request) = request.count * gainForEndpoint(request.endpointId)
+
+    requestsPerVideo(videoId).map(gainForRequest).sum
+  }
+
+  def solveCache(cacheId: Int): Set[Int] = {
+    val nbVideos = videoSizes.size
+    val allVideoIds = 0 until nbVideos
+    val (_, bestVideoIds) = Knapsack.solve[Int](allVideoIds, gain(cacheId, _), videoSizes, cacheCapacity)
+    bestVideoIds
+  }
+
+  def solveWithKnapsack: Solution = {
+    val affectations = for {cacheId <- 0 until caches
+                            videosInCache = solveCache(cacheId)
+    } yield ServerAffectation(cacheId, videosInCache.toVector)
+    Solution(affectations.toVector)
+  }
+
+  def solve: Solution = {
+
+    def videosSelect(videos: List[Video], remainingSize: Int, selected: Vector[Int] = Vector()): Vector[Int] = videos match {
+      case Nil => selected
+      case h :: t =>
+        if (h.size <= remainingSize) videosSelect(t, remainingSize - h.size, h.id +: selected)
+        else videosSelect(t, remainingSize, selected)
+    }
+
+    val affectations = for {
+      cacheId <- 0 until caches
+    } yield {
+      val requests = requestsPerCacheServer(cacheId)
+      val ids = requests.map(_.videoId).distinct // TODO : keep count
+      val vids = Random.shuffle(ids.map(videos))
+      val selected = videosSelect(vids.toList, cacheCapacity)
+      debug(s"for server $cacheId, using ${selected.size} videos out of ${ids.size}")
+      ServerAffectation(cacheId, selected)
+    }
+    Solution(affectations.toVector)
+  }
+
+
 }
 
 case class Video(id: Int, size: Int)

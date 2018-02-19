@@ -17,16 +17,16 @@ class SolverSpec extends FlatSpec with Matchers {
   }
 
   "Solver" should "find gain" in {
-    Solver.gain(problem, 0, 0) shouldBe 0
-    Solver.gain(problem, 0, 1) shouldBe 900000
+    problem.gain(0, 0) shouldBe 0
+    problem.gain(0, 1) shouldBe 900000
   }
 
   "Solver" should "optimize one cache - SC0" in {
-    Solver.solveCache(problem, 0) shouldBe Set(1,3)
+    problem.solveCache( 0) shouldBe Set(1,3)
   }
 
   "Solver" should "solve problem by optimizing cache by cache" in {
-    val solution = Solver.solveWithKnapsack(problem)
+    val solution = problem.solveWithKnapsack
     Validator.score(solution, problem) shouldBe Left(562500)
   }
 
