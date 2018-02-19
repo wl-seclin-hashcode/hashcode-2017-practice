@@ -4,6 +4,8 @@ import grizzled.slf4j.Logging
 import scala.util.Random
 
 object Solver extends Logging {
+  def solveWithKnapsack(problem: Problem) = ???
+
   def gain(problem: Problem, cacheId: Int, videoId: Int): Int = {
     def gainForEndpoint(endpointId: Int) = problem.endpoints(endpointId).latencySavedPerCacheServer(cacheId)
 

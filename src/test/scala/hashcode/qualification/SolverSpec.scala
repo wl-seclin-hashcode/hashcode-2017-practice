@@ -7,6 +7,8 @@ import org.scalatest.{FlatSpec, Matchers}
 @RunWith(classOf[JUnitRunner])
 class SolverSpec extends FlatSpec with Matchers {
 
+  val problem = Parser.read("qualification/example.in")
+
   "Solver" should "solve trivial problem" in {
     //    val sol = Solver.solve(problem)
     //
@@ -15,14 +17,17 @@ class SolverSpec extends FlatSpec with Matchers {
   }
 
   "Solver" should "find gain" in {
-    val problem = Parser.read("qualification/example.in")
     Solver.gain(problem, 0, 0) shouldBe 0
     Solver.gain(problem, 0, 1) shouldBe 900000
   }
 
   "Solver" should "optimize one cache - SC0" in {
-    val problem = Parser.read("qualification/example.in")
     Solver.solveCache(problem, 0) shouldBe Set(1,3)
+  }
+
+  "Solver" should "solve problem by optimizing cache by cache" in {
+    val solution = Solver.solveWithKnapsack(problem)
+    Validator.score(solution, problem) shouldBe 462500
   }
 
 }
