@@ -23,14 +23,14 @@ case class ServerAffectation(cacheServer: Int, videos: Vector[Int])
 
 object Solution extends Logging {
 
-  def readFromFile(name: String): Option[Solution] = {
-    val fileName = name + ".json"
-    if (Files.exists(Paths.get(fileName))) Some {
-      val content = io.Source.fromFile(fileName).getLines.mkString
-      info(s"loaded from $fileName")
-      Json.parse(content).as[Solution]
-    }
-    else None
-  }
+//  def readFromFile(name: String): Option[Solution] = {
+//    val fileName = name + ".json"
+//    if (Files.exists(Paths.get(fileName))) Some {
+//      val content = io.Source.fromFile(fileName).getLines.mkString
+//      info(s"loaded from $fileName")
+//      Json.parse(content).as[Solution]
+//    }
+//    else None
+//  }
 
 }

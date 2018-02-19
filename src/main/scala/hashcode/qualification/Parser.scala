@@ -1,7 +1,15 @@
 package hashcode.qualification
 
 import java.io.File
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Paths}
 import java.util.Scanner
+
+import rapture._
+import core._
+import json._
+import jsonBackends.jawn._
+import formatters.humanReadable._
 
 object Parser {
 
@@ -39,8 +47,19 @@ object Parser {
       Request(v, e, n)
     }
 
-    Problem(c, x, videoSizes, endpoints, requests)
+    val p = Problem(c, x, videoSizes, endpoints, requests)
+    implicit val ser = implicitly[Serializer[Endpoint, Json]]
+    val serialized = Json(ProblemJson(c, x, videoSizes, endpoints, requests)).toBareString
+    Files.write(Paths.get(f + ".json"), serialized.getBytes(StandardCharsets.UTF_8))
+
+    p
 
   }
+
+  case class ProblemJson(c: Int, x: Int,
+                         videoSizes: Vector[Int],
+                         endpoints: Vector[Endpoint],
+                         reqs: Vector[Request]
+                        )
 
 }
