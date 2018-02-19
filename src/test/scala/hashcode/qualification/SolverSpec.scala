@@ -27,7 +27,7 @@ class SolverSpec extends FlatSpec with Matchers {
 
   "Solver" should "solve problem by optimizing cache by cache" in {
     val solution = Solver.solveWithKnapsack(problem)
-    Validator.score(solution, problem) shouldBe 462500
+    Validator.score(solution, problem) shouldBe Left(562500)
   }
 
 }
