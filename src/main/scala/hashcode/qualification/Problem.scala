@@ -95,19 +95,6 @@ case class Problem(
     requestsPerVideo(videoId).map(gainForRequest).sum
   }
 
-  def solveCache(cacheId: Int): Set[Int] = {
-    val nbVideos = videoSizes.size
-    val allVideoIds = 0 until nbVideos
-    val (_, bestVideoIds) = Knapsack.solve[Int](allVideoIds, gain(cacheId, _), videoSizes, cacheCapacity)
-    bestVideoIds
-  }
-
-  def solveWithKnapsack: Solution = {
-    val affectations = for {cacheId <- 0 until caches
-                            videosInCache = solveCache(cacheId)
-    } yield ServerAffectation(cacheId, videosInCache.toVector)
-    Solution(affectations.toVector)
-  }
 
   def solve: Solution = {
 
