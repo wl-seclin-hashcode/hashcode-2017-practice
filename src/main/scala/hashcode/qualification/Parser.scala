@@ -4,17 +4,28 @@ import java.io.File
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import java.util.Scanner
-import upickle.default._
+
+import play.api.libs.json.Json._
 
 
 object Parser {
-
+//  implicit val mapReads = reads[Map[Int,Int]]
+//  implicit val mapWrites = writes[Map[Int,Int]]
+//  implicit val videoReads = reads[Video]
+//  implicit val videoWrites = writes[Video]
+//  implicit val endpointReads = reads[Endpoint]
+//  implicit val endpointWrites = writes[Endpoint]
+//  implicit val requestReads = reads[Request]
+//  implicit val requestWrites = writes[Request]
+//  implicit val problemReads = reads[Problem]
+//  implicit val problemWrites = writes[Problem]
 
   def parse(f: String): Problem =
-    if (path(f).toFile.exists) {
-      val content = io.Source.fromFile(path(f).toFile).getLines.mkString
-      read[Problem](content)
-    } else {
+//    if (path(f).toFile.exists) {
+//      val content = io.Source.fromFile(path(f).toFile).getLines.mkString
+//      fromJson[Problem](parse(content))
+//    } else
+    {
       val scan = new Scanner(new File(f))
 
       val v = scan.nextInt()
@@ -48,8 +59,8 @@ object Parser {
 
       val p = Problem(c, x, videoSizes, endpoints, requests)
 
-      val serialized = write(p)
-      Files.write(path(f), serialized.getBytes(StandardCharsets.UTF_8))
+//      val serialized = stringify(toJson(p))
+//      Files.write(path(f), serialized.getBytes(StandardCharsets.UTF_8))
 
       p
 

@@ -4,14 +4,12 @@ import java.io.PrintStream
 import java.nio.file.{ Files, Paths }
 
 import grizzled.slf4j.Logging
-import rapture.json._
-import rapture.json.jsonBackends.jawn._
 
 case class Solution(serverAffectations: Vector[ServerAffectation]) {
 
   def writeToFile(name: String): Unit = {
     val ps = new PrintStream(name + ".json")
-    ps.println(Json(this).toString)
+//    ps.println(Json(this).toString)
     ps.close()
   }
 
