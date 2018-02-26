@@ -2,7 +2,6 @@ package hashcode.qualification
 
 import grizzled.slf4j.Logging
 import play.api.libs.json.Json._
-import play.api.libs.json._
 
 import scala.util.Random
 
@@ -122,54 +121,5 @@ case class Problem(
 }
 
 object Problem {
-  import Video._
-  import Endpoint._
-  import Request._
-  implicit val problemReads: Reads[Problem] = reads[Problem]
-  implicit val problemWrites: OWrites[Problem] = writes[Problem]
-}
-
-case class Video(id: Int, size: Int)
-
-
-object Video {
-  implicit val videoReads: Reads[Video] = reads[Video]
-  implicit val videoWrites: OWrites[Video] = writes[Video]
-}
-
-case class Endpoint(id: Int, latency: Int, serverLatencies: Map[Int, Int]) {
-  val latencySavedPerCacheServer: Map[Int, Int] =
-    serverLatencies.mapValues(l => latency - l).withDefaultValue(0)
-
-  val cacheServers = latencySavedPerCacheServer.keySet
-}
-
-object Endpoint {
-
-  implicit val mapReads: Reads[Map[Int, Int]] = new Reads[Map[Int, Int]] {
-    def reads(jv: JsValue): JsResult[Map[Int, Int]] =
-      JsSuccess(jv.as[Map[String, Int]].map { case (k, v) =>
-        Integer.parseInt(k) -> v.asInstanceOf[Int]
-      })
-  }
-
-  implicit val mapWrites: Writes[Map[Int, Int]] = new Writes[Map[Int, Int]] {
-    def writes(map: Map[Int, Int]): JsValue =
-      Json.obj(map.map { case (s, o) =>
-        val ret: (String, JsValueWrapper) = s.toString -> o
-        ret
-      }.toSeq: _*)
-  }
-
-  implicit val mapFormat: Format[Map[Int, Int]] = Format(mapReads, mapWrites)
-
-  implicit val endpointReads: Reads[Endpoint] = reads[Endpoint]
-  implicit val endpointWrites: OWrites[Endpoint] = writes[Endpoint]
-}
-
-case class Request(videoId: Int, endpointId: Int, count: Int)
-
-object Request {
-  implicit val requestReads: Reads[Request] = reads[Request]
-  implicit val requestWrites: OWrites[Request] = writes[Request]
+  implicit val fmt = format[Problem]
 }

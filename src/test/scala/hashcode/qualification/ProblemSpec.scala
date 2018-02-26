@@ -6,7 +6,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class ProblemSpec extends FlatSpec with Matchers {
-  val problem = Parser.parse("qualification/example.in")
+  val problem = Parser.read("qualification/example.in")
 
   val sol = Solution(Vector(
     ServerAffectation(0, Vector(2)),

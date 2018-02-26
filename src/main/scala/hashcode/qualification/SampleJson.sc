@@ -1,13 +1,10 @@
 
-import hashcode.qualification.Endpoint._
-import hashcode.qualification.Video._
-import hashcode.qualification.{Endpoint, Problem, Request, Video}
+import hashcode.qualification._
 import play.api.libs.json.Json._
 
 case class Person(name: String, age: Int)
 
-implicit val residentReads = reads[Person]
-implicit val residentWrites = writes[Person]
+implicit val fmt = format[Person]
 
 stringify(toJson(List(1, 2, 3, 4)))
 stringify(toJson(Map(1 -> 2, 3 -> 4)))
