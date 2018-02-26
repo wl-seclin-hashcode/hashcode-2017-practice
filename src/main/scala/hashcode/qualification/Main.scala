@@ -12,7 +12,7 @@ object Main extends App with Logging {
 
   def solveIt(n: String): Int = {
     info(s"starting problem $n")
-    val problem = Parser.read(n)
+    val problem = Parser.parse(n)
     info(s"parsed problem $n : ${problem.caches} cache servers ${problem.endpoints.size} endpoints ${problem.requests.size} requests")
     val solution = problem.solve
 

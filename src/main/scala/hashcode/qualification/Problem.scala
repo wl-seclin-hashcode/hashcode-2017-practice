@@ -1,6 +1,7 @@
 package hashcode.qualification
 
 import grizzled.slf4j.Logging
+import upickle.default._
 
 import scala.util.Random
 
@@ -117,11 +118,19 @@ case class Problem(
     }
     Solution(affectations.toVector)
   }
+}
 
-
+object Problem{
+  implicit def rw: ReadWriter[Problem] = macroRW
 }
 
 case class Video(id: Int, size: Int)
+
+object Video{
+  implicit def rw: ReadWriter[Video] = macroRW
+}
+
+
 
 case class Endpoint(id: Int, latency: Int, serverLatencies: Map[Int, Int]) {
   val latencySavedPerCacheServer: Map[Int, Int] =
@@ -130,4 +139,12 @@ case class Endpoint(id: Int, latency: Int, serverLatencies: Map[Int, Int]) {
   val cacheServers = latencySavedPerCacheServer.keySet
 }
 
+object Endpoint{
+  implicit def rw: ReadWriter[Endpoint] = macroRW
+}
+
 case class Request(videoId: Int, endpointId: Int, count: Int)
+
+object Request{
+  implicit def rw: ReadWriter[Request] = macroRW
+}

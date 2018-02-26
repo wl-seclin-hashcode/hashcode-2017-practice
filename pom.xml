@@ -29,30 +29,18 @@
             <version>2.11.0-M7</version>
         </dependency>
 
-        <!-- optional dependencies -->
-        <!-- <dependency> -->
-        <!-- <groupId>com.softwaremill.macwire</groupId> -->
-        <!-- <artifactId>macros_2.11</artifactId> -->
-        <!-- <version>0.8.0</version> -->
-        <!-- </dependency> -->
-
-        <!-- <dependency> -->
-        <!-- <groupId>com.typesafe.akka</groupId> -->
-        <!-- <artifactId>akka-actor_2.11</artifactId> -->
-        <!-- <version>2.3.8</version> -->
-        <!-- </dependency> -->
-
-        <!-- <dependency> -->
-        <!-- <groupId>com.github.nscala-time</groupId> -->
-        <!-- <artifactId>nscala-time_2.11</artifactId> -->
-        <!-- <version>1.4.0</version> -->
-        <!-- </dependency> -->
-
         <dependency>
             <groupId>com.propensive</groupId>
             <artifactId>rapture-json-jawn_2.11</artifactId>
             <version>2.0.0-M9</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.lihaoyi</groupId>
+            <artifactId>upickle_2.11</artifactId>
+            <version>0.5.1</version>
+        </dependency>
+
 
         <!-- logs -->
         <dependency>
